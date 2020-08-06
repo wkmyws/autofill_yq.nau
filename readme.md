@@ -269,8 +269,12 @@ async function run() {
 以win为例，编写 `yq_autofill.bat`:
 
 ```bash
-node ./test.js
+node 绝对路径/test.js
 ```
+
+注意如果填写 ./test.js
+
+那么在执行bat文件时的 ./ 会解释为 cmd 所在路径
 
 然后利用win的[定时任务](https://www.cnblogs.com/wudequn/p/8353193.html)来设置定时填写的功能，定时任务的`程序或脚本地址`填写`yq_autofill.bat`的绝对路径即可
 
