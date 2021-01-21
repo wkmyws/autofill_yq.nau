@@ -1,25 +1,29 @@
 let config = {
-  usr: "学号",//账号
-  pwd: "密码",//密码
+  usr: "",//账号
+  pwd: "",//密码
+  browser: 'chrome.exe',//本地浏览器地址
   vrCode: null,
   body_tem: 36.9 + Math.round(Math.random() * 3 - 1) / 10,
 }
 
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const { recognize } = require('./svg-captcha-recognize/index')
 const cookies = [
   {
-    'domain': 'yq.nauvpn.cn',
+    'domain': 'yq2.nauvpn.cn',
     //'path': '/',
     'name': 'NSYQJK-ISSHOWTIPNEXTTIME',
     'value': '{%22isNotShowNext%22:true%2C%22isAccept%22:true}',
   },
 ];
 const autoFillIn = async () => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    executablePath: config.browser,
+  });
   const page = await browser.newPage();
   await page.setCookie(...cookies)
-  await page.goto('http://yq.nauvpn.cn/login', {
+  await page.goto('http://yq2.nauvpn.cn/login', {
     waitUntil: 'networkidle0'
   });
   //验证码
@@ -67,7 +71,7 @@ const autoFillIn = async () => {
     await browser.close();
     return login_state
   }
-  if(login_state==1){
+  if (login_state == 1) {
     console.log("already fill in !")
     await page.waitFor(1000)
     await browser.close();
