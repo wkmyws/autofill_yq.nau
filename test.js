@@ -35,7 +35,7 @@ const autoFillIn = async () => {
     if (config.vrCode.length <= 3) {
       //需要重新获取验证码
       await page.click("svg")
-      await page.waitFor(1000)
+      await page.waitForTimeout(1000)
       await vrCodeVR()
     }
   }
@@ -67,23 +67,23 @@ const autoFillIn = async () => {
   let login_state = await nextPageVR()
   if (login_state == -1) {
     console.log("restart server...")
-    await page.waitFor(500)
+    await page.waitForTimeout(500)
     await browser.close();
     return login_state
   }
   if (login_state == 1) {
     console.log("already fill in !")
-    await page.waitFor(1000)
+    await page.waitForTimeout(1000)
     await browser.close();
     return login_state
   }
 
   console.log("success login !")
-  await page.waitFor(2000)
+  await page.waitForTimeout(2000)
   await page.type("input[placeholder='请输入今日体温']", config.body_tem + "", { delay: 3 })
   await page.click("button[type='button']")
   console.log('success!')
-  await page.waitFor(2000)
+  await page.waitForTimeout(2000)
   await browser.close();
   return 0;
 }
